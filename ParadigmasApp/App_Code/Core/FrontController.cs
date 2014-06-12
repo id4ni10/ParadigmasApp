@@ -50,12 +50,12 @@ namespace Core
                 string controller = request["controler"];
 
                 string parametro = request["parametro"];
-                string tipos = request["tipos"];
+                string tipo = request["tipo"];
 
                 object[] parametros = new object[1];
 
 
-                Type humanoType = Type.GetType(tipos);
+                Type humanoType = Type.GetType(tipo);
 
                 parametros[0] = parametro;
 
@@ -66,7 +66,7 @@ namespace Core
 
                 MethodInfo myMethod = controllerType.GetMethod(method);
 
-                myMethod.Invoke(controllerType, parametros);
+                myMethod.Invoke(controllerObject, parametros);
 
 
 
@@ -99,7 +99,7 @@ namespace Core
         {
             string controller = Request["controler"];
             string parametro = Request["parametro"];
-            string tipo = Request["tipos"];
+            string tipo = Request["tipo"];
 
             if (controller == null || controller == "" || parametro == null || parametro == "" || tipo == null || tipo == "")
             {
