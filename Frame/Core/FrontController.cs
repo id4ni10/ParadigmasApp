@@ -3,14 +3,11 @@ using System.Reflection;
 using System.Collections.Generic;
 using System.Net;
 using System.Web;
-
 /// <summary>
 /// Classe usada como mediadora entre as requisições do cliente e o servidor ( Pattern Mediator )
 /// </summary>
-
-namespace Core
+namespace Frame.Core
 {
-
     public class FrontController
     {
         #region Streams
@@ -34,8 +31,12 @@ namespace Core
 
         #endregion
 
+        public static void run(HttpServerUtility Server, Type[] Types, HttpRequest Request, HttpResponse Response)
+        {
+            new FrontController(Server, Types, Request, Response);
+        }
 
-        public FrontController(HttpRequest request, HttpResponse response)
+        private FrontController(HttpServerUtility Server, Type[] Types, HttpRequest request, HttpResponse response)
         {
             try
             {
@@ -47,63 +48,54 @@ namespace Core
                 this.method = request.HttpMethod;
                 this.uri = request.Url.AbsoluteUri;
 
-                string controller = request["controler"];
-
+                string controller = request["controller"];
                 string parametro = request["parametro"];
                 string tipo = request["tipo"];
 
                 object[] parametros = new object[1];
-
-
-                Type humanoType = Type.GetType(tipo);
-
                 parametros[0] = parametro;
 
-                var controllerType = Type.GetType("App_Code.Controllers." + controller);
-                object controllerObject = Activator.CreateInstance(controllerType);
+                Type controllerType = null;
+                object controllerObject = null;
 
-                //response.Write(controllerType.InvokeMember(method, BindingFlags.InvokeMethod | BindingFlags.Public | BindingFlags.Instance, null, controllerObject, parametros));
+                foreach (Type type in Types)
+                {
+                    if (type.Name == controller)
+                    {
+                        controllerType = type;
+                        controllerObject = Server.CreateObject(type);
+                    }
+                }
+
+                if (controllerType == null)
+                {
+                    throw new Frame.Exeptions._400();
+                }
 
                 MethodInfo myMethod = controllerType.GetMethod(method);
-
-                myMethod.Invoke(controllerObject, parametros);
-
-
+                response.Write(myMethod.Invoke(controllerObject, parametros));
 
             }
-            catch (Exception ex)
+            catch (Exeptions.GenericExeption ex)
             {
-                response.StatusCode = (int)HttpStatusCode.NotFound;
-                //response.Redirect("http://localhost:16439/");
+                response.StatusCode = ex.Code;
+            }
+            catch (Exception e)
+            {
+                response.StatusCode = (int)HttpStatusCode.InternalServerError;
             }
 
         }
 
-
-        public static void run(HttpRequest Request, HttpResponse Response)
+        private void Validate(HttpRequest Request)
         {
-            new FrontController(Request, Response);
-        }
-
-        //public WebResponse Response(WebRequest request)
-        //{
-        //    if (Validate(request))
-        //    {
-        //        return request.GetResponse();
-        //    }
-
-        //    return null;
-        //}
-
-        public void Validate(HttpRequest Request)
-        {
-            string controller = Request["controler"];
+            string controller = Request["controller"];
             string parametro = Request["parametro"];
             string tipo = Request["tipo"];
 
             if (controller == null || controller == "" || parametro == null || parametro == "" || tipo == null || tipo == "")
             {
-                throw new Exception("404 - Não encontrado");
+                throw new Exeptions._404();
             }
 
         }

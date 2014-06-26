@@ -1,0 +1,4 @@
+C:\Users\Danilo-PC\Documents\GitHub\ParadigmasApp\Frame\bin\Debug\Frame.dll
+C:\Users\Danilo-PC\Documents\GitHub\ParadigmasApp\Frame\bin\Debug\Frame.pdb
+C:\Users\Danilo-PC\Documents\GitHub\ParadigmasApp\Frame\obj\Debug\Frame.dll
+C:\Users\Danilo-PC\Documents\GitHub\ParadigmasApp\Frame\obj\Debug\Frame.pdb
