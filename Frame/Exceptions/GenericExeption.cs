@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Frame.Exeptions
+namespace Frame.Exceptions
 {
-    public class GenericExeption : Exception
+    public class GenericException : Exception
     {
         private int code;
 
@@ -14,8 +14,8 @@ namespace Frame.Exeptions
             get { return code; }
             set { this.code = value; }
         }
-        public GenericExeption(string exeption)
-            : base(exeption) { }
+        public GenericException(string exception)
+            : base(exception) { }
 
     }
 }

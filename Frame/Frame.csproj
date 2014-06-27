@@ -43,9 +43,9 @@
   <ItemGroup>
     <Compile Include="Core\FrontController.cs" />
     <Compile Include="Core\GenericController.cs" />
-    <Compile Include="Exeptions\404.cs" />
-    <Compile Include="Exeptions\400.cs" />
-    <Compile Include="Exeptions\GenericExeption.cs" />
+    <Compile Include="Exceptions\404.cs" />
+    <Compile Include="Exceptions\400.cs" />
+    <Compile Include="Exceptions\GenericExeption.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

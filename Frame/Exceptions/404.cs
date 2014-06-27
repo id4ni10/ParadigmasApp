@@ -3,9 +3,9 @@
 /// <summary>
 /// NOT_FOUND
 /// </summary>
-namespace Frame.Exeptions
+namespace Frame.Exceptions
 {
-    public class _404 : GenericExeption
+    public class _404 : GenericException
     {
         public _404()
             : base("404 - Não encontrado") { Code = (int)System.Net.HttpStatusCode.NotFound; }

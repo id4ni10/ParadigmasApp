@@ -69,14 +69,25 @@ namespace Frame.Core
 
                 if (controllerType == null)
                 {
-                    throw new Frame.Exeptions._400();
+                    throw new Frame.Exceptions._400();
                 }
 
                 MethodInfo myMethod = controllerType.GetMethod(method);
                 response.Write(myMethod.Invoke(controllerObject, parametros));
 
+
+                //String resposta = myMethod.Invoke(controllerObject, parametros);
+
+                //VERIFICA SE O WEB.CONFIG POSSUI O PARAMETRO TEMPLATE. SE POSSUIR, CARREGA O ARQUIVO EM UMA STRING "page";
+
+                //PROCURA NA STRING A MARCAÇÃO {BODY} E SUBSTITUI PELO OBJETO "resposta"
+
+                //RETORNA "page"
+
+                //SE NÃO POSSUIR TEMPLATE RETORNA "resposta"
+
             }
-            catch (Exeptions.GenericExeption ex)
+            catch (Exceptions.GenericException ex)
             {
                 response.StatusCode = ex.Code;
             }
@@ -95,7 +106,7 @@ namespace Frame.Core
 
             if (controller == null || controller == "" || parametro == null || parametro == "" || tipo == null || tipo == "")
             {
-                throw new Exeptions._404();
+                throw new Exceptions._404();
             }
 
         }
