@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
-using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Web.SessionState;
 using System.Net;
 using System.Web;
 /// <summary>
@@ -31,13 +32,14 @@ namespace Frame.Core
 
         #endregion
 
-        public static void run(HttpServerUtility Server, Type[] Types, HttpRequest Request, HttpResponse Response)
+        public static void run(HttpServerUtility Server, HttpSessionState Session, Type[] Types, NameValueCollection Configuration, HttpRequest Request, HttpResponse Response)
         {
-            new FrontController(Server, Types, Request, Response);
+            new FrontController(Server, Session, Types, Configuration, Request, Response);
         }
 
-        private FrontController(HttpServerUtility Server, Type[] Types, HttpRequest request, HttpResponse response)
+        private FrontController(HttpServerUtility Server, HttpSessionState Session, Type[] Types, NameValueCollection Configuration, HttpRequest request, HttpResponse response)
         {
+
             try
             {
                 Validate(request);
@@ -73,23 +75,26 @@ namespace Frame.Core
                 }
 
                 MethodInfo myMethod = controllerType.GetMethod(method);
-                response.Write(myMethod.Invoke(controllerObject, parametros));
 
+                PropertyInfo myProperty = controllerType.GetProperty("Session");
 
-                //String resposta = myMethod.Invoke(controllerObject, parametros);
+                myProperty.SetValue(controllerObject, Session, null);
 
-                //VERIFICA SE O WEB.CONFIG POSSUI O PARAMETRO TEMPLATE. SE POSSUIR, CARREGA O ARQUIVO EM UMA STRING "page";
+                object obj = myMethod.Invoke(controllerObject, parametros);
 
-                //PROCURA NA STRING A MARCAÇÃO {BODY} E SUBSTITUI PELO OBJETO "resposta"
+                TemplateLoader template = new TemplateLoader(Server, Configuration);
 
-                //RETORNA "page"
-
-                //SE NÃO POSSUIR TEMPLATE RETORNA "resposta"
+                response.Write(template.applyTemplate(obj));
 
             }
             catch (Exceptions.GenericException ex)
             {
                 response.StatusCode = ex.Code;
+            }
+            catch (Exceptions.TemplateException ex)
+            {
+                response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                response.Write(ex.Message);
             }
             catch (Exception e)
             {

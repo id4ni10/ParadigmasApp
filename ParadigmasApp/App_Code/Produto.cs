@@ -10,12 +10,13 @@ public class Produto : GenericController
 {
     public override object GET(object param)
     {
-        return "GET";
+        Session["s"] = param;
+        return Session["s"].ToString();
     }
 
     public override object POST(object param)
     {
-        return "POST";
+        return Session["s"].ToString();
     }
 
     public override object PUT(object param)

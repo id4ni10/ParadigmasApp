@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Web.SessionState;
 using System.Web;
 
 /// <summary>
@@ -10,6 +9,14 @@ namespace Frame.Core
 {
     public abstract class GenericController
     {
+        private HttpSessionState session;
+
+        public HttpSessionState Session
+        {
+            get { return session; }
+            set { session = value; }
+        }
+
         public abstract object GET(object param);
 
         public abstract object POST(object param);
