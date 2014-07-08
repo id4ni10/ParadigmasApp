@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Specialized;
 using System.Text;
 using System.IO;
@@ -35,8 +35,15 @@ namespace Frame.Core
         {
             if (this.hasTemplate())
             {
-                String page = null;
-                try
+                //String page = null;
+
+                System.IO.StringWriter htmlStringWriter = new System.IO.StringWriter();
+                //Server.Execute(Server.MapPath("Templates/" + configuration["template"]), htmlStringWriter);
+                
+                Server.Execute("Templates/" + configuration["template"] + "", htmlStringWriter);
+                string htmlOutput = htmlStringWriter.GetStringBuilder().ToString();
+                return htmlOutput;
+                /*try
                 {
                     page = File.ReadAllText(Server.MapPath("~/templates/" + configuration["template"]));
                 }
@@ -44,7 +51,7 @@ namespace Frame.Core
                 {
                     throw new Exceptions.TemplateException("Não foi possível carregar o template.");
                 }
-                return page.Replace("[[content]]", obj.ToString());
+                return page.Replace("[[content]]", obj.ToString());*/
             }
             return obj.ToString();
         }
