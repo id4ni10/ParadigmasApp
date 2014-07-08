@@ -1,5 +1,5 @@
-﻿using System;
-
+using System;
+using System.Collections.Generic;
 //Nosso Assembly
 using Frame.Core;
 /// <summary>
@@ -8,10 +8,20 @@ using Frame.Core;
 /// 
 public class Produto : GenericController
 {
+    private List<Post> posts;
+
+    public Produto()
+    {
+        posts = new List<Post>();
+
+        posts.Add(new Post("Aziz", "Sault"));
+        posts.Add(new Post("Hernã", "Teste"));
+        posts.Add(new Post("Aquiles", "Mizerê"));
+    }
+
     public override object GET(object param)
     {
-        Session["s"] = param;
-        return Session["s"].ToString();
+        return posts;
     }
 
     public override object POST(object param)
