@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Reflection;
 using System.Collections.Specialized;
 using System.Web.SessionState;
@@ -82,6 +82,8 @@ namespace Frame.Core
 
                 object obj = myMethod.Invoke(controllerObject, parametros);
 
+                Session["obj"] = obj;
+
                 TemplateLoader template = new TemplateLoader(Server, Configuration);
 
                 response.Write(template.applyTemplate(obj));
@@ -90,6 +92,7 @@ namespace Frame.Core
             catch (Exceptions.GenericException ex)
             {
                 response.StatusCode = ex.Code;
+                response.Write(ex.Message);
             }
             catch (Exceptions.TemplateException ex)
             {
@@ -99,6 +102,7 @@ namespace Frame.Core
             catch (Exception e)
             {
                 response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                response.Write(e.Message);
             }
 
         }
