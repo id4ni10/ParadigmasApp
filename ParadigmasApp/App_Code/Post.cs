@@ -10,12 +10,30 @@ public class Post
         get { return titulo; }
         set { titulo = value; }
     }
-     String conteudo;
-     List<String> comentarios;
+    
+    String conteudo;
 
-    public Post(string a, string b)
+    public String Conteudo
     {
-        this.titulo = a;
-        this.conteudo = b;
+        get { return conteudo; }
+        set { conteudo = value; }
+    }
+    List<String> comentarios;
+
+    public List<String> Comentarios
+    {
+        get { return comentarios; }
+        set { comentarios = value; }
+    }
+
+    public Post(string titulo, string conteudo)
+    {
+        this.titulo = titulo;
+        this.conteudo = conteudo;
+
+        comentarios = new List<string>();
+        comentarios.Add("Comentario 1");
+        comentarios.Add("Comentario 2");
+        comentarios.Add("Comment 3");
     }
 }
