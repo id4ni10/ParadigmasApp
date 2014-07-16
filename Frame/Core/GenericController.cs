@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using System.Web.SessionState;
 using System.Web;
 
@@ -17,12 +18,12 @@ namespace Frame.Core
             set { session = value; }
         }
 
-        public abstract object GET(object param);
+        public abstract object GET(Dictionary<String, Object> param);
 
-        public abstract object POST(object param);
+        public abstract object POST(Dictionary<String, Object> param);
 
-        public abstract object PUT(object param);
+        public abstract object PUT(Dictionary<String, Object> param);
 
-        public abstract object DELETE(object param);
+        public abstract object DELETE(Dictionary<String, Object> param);
     }
 }
