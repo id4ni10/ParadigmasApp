@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using System.Collections.Specialized;
+using System.Collections.Generic;
 using System.Web.SessionState;
 using System.Net;
 using System.Web;
@@ -51,11 +52,13 @@ namespace Frame.Core
                 this.uri = request.Url.AbsoluteUri;
 
                 string controller = request["controller"];
-                string parametro = request["parametro"];
-                string tipo = request["tipo"];
+                //string parametro = request["parametro"];
+                //string tipo = request["tipo"];
 
-                object[] parametros = new object[1];
-                parametros[0] = parametro;
+                //object[] parametros = new object[1];
+                //parametros[0] = parametro;
+
+                Dictionary<String, Object> dict = new MapBuilder(request).getDictionary();
 
                 Type controllerType = null;
                 object controllerObject = null;
@@ -80,7 +83,7 @@ namespace Frame.Core
 
                 myProperty.SetValue(controllerObject, Session, null);
 
-                object obj = myMethod.Invoke(controllerObject, parametros);
+                object obj = myMethod.Invoke(controllerObject, new object[] { dict });
 
                 Session["obj"] = obj;
 
@@ -110,10 +113,10 @@ namespace Frame.Core
         private void Validate(HttpRequest Request)
         {
             string controller = Request["controller"];
-            string parametro = Request["parametro"];
-            string tipo = Request["tipo"];
+            //string parametro = Request["parametro"];
+            //string tipo = Request["tipo"];
 
-            if (controller == null || controller == "" || parametro == null || parametro == "" || tipo == null || tipo == "")
+            if (controller == null || controller == "")
             {
                 throw new Exceptions._404();
             }
