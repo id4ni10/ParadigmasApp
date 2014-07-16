@@ -7,15 +7,22 @@
     <title>Untitled Page</title>
 </head>
 <body>
-    <form id="form1" runat="server">
     <div runat="server" id="div1" style="border: 1px solid black;">
         <%
             List<Post> posts = (List<Post>)Session["obj"]; 
             foreach(Post post in posts) {
-                Response.Write(post.Titulo+"<br/>");
+                Response.Write("<h2>" + post.Titulo + "</h2>");
+                Response.Write("<p>" + post.Conteudo + "</p>");
+                foreach(String comentario in post.Comentarios) {
+                    Response.Write("<em>" + comentario + "</em><br/>");
+                }
             }
         %>
     </div>
+    <form id="form1" method="post">
+        Título: <input type="text" name="titulo" /><br />
+        Conteúdo: <textarea name="conteudo" rows="7" cols="100"></textarea><br />
+        <input type="submit" value="Postar" />
     </form>
 </body>
 </html>
