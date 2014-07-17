@@ -54,8 +54,7 @@ namespace Frame.Core
 
                 string controller = request["controller"];
           
-                Dictionary<String, Object> dict = new MapBuilder(request).getDictionary();
-
+               
                 Type controllerType = null;
                 object controllerObject = null;
 
@@ -68,10 +67,12 @@ namespace Frame.Core
                     }
                 }
 
-                if (controllerType == null)
+                if (controllerType == null || controllerObject.GetType().BaseType.Name != "GenericController")
                 {
                     throw new Frame.Exceptions._400();
-                }
+                } 
+                
+                Dictionary<String, Object> dict = new MapBuilder(request, (GenericController)controllerObject).getDictionary();
 
                 MethodInfo myMethod = controllerType.GetMethod(method);
 

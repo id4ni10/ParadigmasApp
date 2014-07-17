@@ -25,5 +25,10 @@ namespace Frame.Core
         public abstract object PUT(Dictionary<String, Object> param);
 
         public abstract object DELETE(Dictionary<String, Object> param);
+
+        public Dictionary<String, Object> getComplexParams()
+        {
+            return new Dictionary<String, Object>();
+        }
     }
 }

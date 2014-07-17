@@ -48,4 +48,11 @@ public class Blog : GenericController
     {
         return "DELETE";
     }
+
+    public Dictionary<String, Object> getComplexParams()
+    {
+        Dictionary<String, Object> postParametro = new Dictionary<string, object>();
+        postParametro.Add("Post",new Post());
+
+    }
 }

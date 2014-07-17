@@ -9,12 +9,36 @@ namespace Frame.Core
     {
         Dictionary<String,Object> dict;
 
-        public MapBuilder(HttpRequest request)
+        public MapBuilder(HttpRequest request, GenericController controller)
         {
             dict = new Dictionary<string, object>();
+            
             foreach (String key in request.QueryString.AllKeys)
             {
-                dict.Add(key, request.QueryString[key]);
+                if(key.Contains("."))
+                {
+                    Dictionary<String, Object> map = controller.getComplexParams();
+
+                    String[] objetoParametro = key.Split('.');
+                    
+                    String objetoComplexo = objetoParametro[0];
+                    String parametro = objetoParametro[1];
+
+                    if(dict.ContainsKey(objetoComplexo)){
+                        object objeto = dict[objetoComplexo];
+                        
+                        myMethod.Invoke(objeto, new object[] { dict });
+                        
+                    }
+
+                    Type tipoObjetoComplexo = map[];
+
+
+
+                } else 
+                {
+                    dict.Add(key, request.QueryString[key]);
+                }
             }
             foreach (String key in request.Form.AllKeys)
             {
@@ -26,5 +50,7 @@ namespace Frame.Core
         {
             return dict;
         }
+
+
     }
 }

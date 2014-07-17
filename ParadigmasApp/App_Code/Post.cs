@@ -36,4 +36,9 @@ public class Post
         comentarios.Add("Comentario 2");
         comentarios.Add("Comment 3");
     }
+
+    public Post()
+    {
+       
+    }
 }
