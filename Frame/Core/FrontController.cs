@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Web.SessionState;
 using System.Net;
 using System.Web;
+using System.Text.RegularExpressions;
 /// <summary>
 /// Classe usada como mediadora entre as requisições do cliente e o servidor ( Pattern Mediator )
 /// </summary>
@@ -52,12 +53,7 @@ namespace Frame.Core
                 this.uri = request.Url.AbsoluteUri;
 
                 string controller = request["controller"];
-                //string parametro = request["parametro"];
-                //string tipo = request["tipo"];
-
-                //object[] parametros = new object[1];
-                //parametros[0] = parametro;
-
+          
                 Dictionary<String, Object> dict = new MapBuilder(request).getDictionary();
 
                 Type controllerType = null;
@@ -110,17 +106,24 @@ namespace Frame.Core
 
         }
 
-        private void Validate(HttpRequest Request)
+        private void Validate(HttpRequest request)
         {
-            string controller = Request["controller"];
-            //string parametro = Request["parametro"];
-            //string tipo = Request["tipo"];
+            string controller;
 
+            try
+            {
+                request.RequestContext.HttpContext.RewritePath(request.FilePath, null, "controller=" + request.PathInfo.Remove(0, 1));
+                controller = request["controller"];
+            }
+            catch (Exception ex)
+            {
+                controller = request["controller"];
+            }
+            
             if (controller == null || controller == "")
             {
                 throw new Exceptions._404();
             }
-
         }
     }
 }

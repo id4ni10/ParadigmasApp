@@ -13,6 +13,5 @@ public partial class Templates_t : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        //List<Post> posts = (List<Post>)Session["obj"];
     }
 }

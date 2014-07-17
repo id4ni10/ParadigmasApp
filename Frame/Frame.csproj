@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Core\FrontController.cs" />
     <Compile Include="Core\GenericController.cs" />
+    <Compile Include="Core\MapBuilder.cs" />
     <Compile Include="Core\TemplateLoader.cs" />
     <Compile Include="Exceptions\404.cs" />
     <Compile Include="Exceptions\400.cs" />
