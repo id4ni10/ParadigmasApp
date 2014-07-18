@@ -26,7 +26,7 @@ namespace Frame.Core
 
         public abstract object DELETE(Dictionary<String, Object> param);
 
-        public Dictionary<String, Object> getComplexParams()
+        public virtual Dictionary<String, Object> getComplexParams()
         {
             return new Dictionary<String, Object>();
         }

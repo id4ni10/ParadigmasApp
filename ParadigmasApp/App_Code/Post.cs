@@ -39,6 +39,9 @@ public class Post
 
     public Post()
     {
-       
+        comentarios = new List<string>();
+        comentarios.Add("Comentario 1");
+        comentarios.Add("Comentario 2");
+        comentarios.Add("Comment 3");
     }
 }

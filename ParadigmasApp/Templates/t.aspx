@@ -20,8 +20,8 @@
         %>
     </div>
     <form id="form1" method="post">
-        Título: <input type="text" name="titulo" /><br />
-        Conteúdo: <textarea name="conteudo" rows="7" cols="100"></textarea><br />
+        Título: <input type="text" name="Post.Titulo" /><br />
+        Conteúdo: <textarea name="Post.Conteudo" rows="7" cols="100"></textarea><br />
         <input type="submit" value="Postar" />
     </form>
 </body>

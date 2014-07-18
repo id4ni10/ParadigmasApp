@@ -28,14 +28,10 @@ public class Blog : GenericController
 
     public override object POST(Dictionary<String, Object> param)
     {
-        String titulo = (String)param["titulo"];
-        String conteudo = (String)param["conteudo"];
-        if (Session["obj"] != null)
-        {
-            posts = (List<Post>)Session["obj"];
-        }
+        Post post = (Post)param["Post"];
 
-        posts.Add(new Post(titulo,conteudo));
+        posts = (List<Post>)Session["obj"];
+        posts.Add(post);
         return posts;
     }
 
@@ -49,10 +45,10 @@ public class Blog : GenericController
         return "DELETE";
     }
 
-    public Dictionary<String, Object> getComplexParams()
+    public override Dictionary<String, Object> getComplexParams()
     {
         Dictionary<String, Object> postParametro = new Dictionary<string, object>();
         postParametro.Add("Post",new Post());
-
+        return postParametro;
     }
 }
